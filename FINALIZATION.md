@@ -146,6 +146,27 @@ mvn test -f tests/pom.xml -Dtest=LoginPositiveTest#testSuccessfulLogin
 | 17 | Маскировка пароля | `LoginUITest` | `testPasswordFieldIsMasked` |
 | 18 | Кнопка входа активна | `LoginUITest` | `testLoginButtonEnabled` |
 
+## Allure-отчёты
+
+После прогона тестов результаты сохраняются в `tests/allure-results/`. Для генерации и просмотра отчёта:
+
+1. **Установить Allure CLI** (если не установлен):
+   ```bash
+   npm install -g allure-commandline
+   ```
+
+2. **Сгенерировать отчёт:**
+   ```bash
+   allure generate tests/allure-results -o tests/allure-report --clean
+   ```
+
+3. **Открыть отчёт в браузере:**
+   ```bash
+   allure open tests/allure-report
+   ```
+
+Отчёт содержит детализацию по каждому тесту: шаги, время выполнения, severity, описания. Директории `allure-results/` и `allure-report/` добавлены в `.gitignore`.
+
 ## Технические решения
 
 - **Page Object Pattern** — разделение логики работы с UI и тестовой логики
