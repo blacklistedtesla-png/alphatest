@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 /**
  * Utility class demonstrating regex usage for test validation.
- * Provides helper metods for validating field inputs and error mesages.
+ * Provides helper methods for validating field inputs and error messages.
  */
 public class RegexHelper {
 

@@ -13,7 +13,7 @@ import java.time.Duration;
 
 /**
  * Page Object for the login screen of Alfa-Test application.
- * Demonstartes both XPath and CSS-style (UiAutomator/resource-id) locators.
+ * Demonstrates both XPath and CSS-style (UiAutomator/resource-id) locators.
  */
 public class LoginPage {
 
@@ -160,7 +160,7 @@ public class LoginPage {
     }
 
     /**
-     * Uses XPath to enter credentails — demonstrates XPath-based interacton.
+     * Uses XPath to enter credentials — demonstrates XPath-based interaction.
      */
     public void loginViaXPath(String username, String password) {
         WebElement userField = findUsernameFieldByXPath();

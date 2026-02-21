@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 /**
- * Page Object for the main screen shown after successfull login.
+ * Page Object for the main screen shown after successful login.
  */
 public class MainPage {
 

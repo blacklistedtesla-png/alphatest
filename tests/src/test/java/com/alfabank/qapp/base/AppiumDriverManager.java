@@ -11,9 +11,9 @@ import java.time.Duration;
  * Manages Appium AndroidDriver lifecycle.
  * Configures capabilities and provides driver instance.
  *
- * Device selecton:
+ * Device selection:
  *   - By default connects to the first available device/emulator.
- *   - To target a specific device, pass its serial via system propery:
+ *   - To target a specific device, pass its serial via system property:
  *       mvn test -Dudid=emulator-5554
  *       mvn test -Dudid=RFCR81AQ8MW
  *   - Or via environment variable APPIUM_UDID.
@@ -64,8 +64,8 @@ public class AppiumDriverManager {
     }
 
     /**
-     * Resolves device UDID from system propery (-Dudid=...) or environment variable (APPIUM_UDID).
-     * Returns null if nether is set — Appium will pick the first available device.
+     * Resolves device UDID from system property (-Dudid=...) or environment variable (APPIUM_UDID).
+     * Returns null if neither is set — Appium will pick the first available device.
      */
     private String resolveUdid() {
         String udid = System.getProperty("udid");

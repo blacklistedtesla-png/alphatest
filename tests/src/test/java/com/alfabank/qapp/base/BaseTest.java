@@ -5,7 +5,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
 /**
- * Base test class provding Appium driver setup and teardown.
+ * Base test class providing Appium driver setup and teardown.
  * All test classes should extend this class.
  */
 public abstract class BaseTest {
