@@ -22,7 +22,7 @@ class LoginUseCase(private val loginGateway: LoginGateway) :
                 if (loginGateway.login(input)) {
                     LoginResult.Success
                 } else {
-                    LoginResult.Error()-
+                    LoginResult.Error()
                 }
             }
         }
