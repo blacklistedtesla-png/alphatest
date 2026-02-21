@@ -1,0 +1,9 @@
+com\alfabank\qapp\pages\LoginPage.class
+com\alfabank\qapp\tests\LoginFieldValidationTest.class
+com\alfabank\qapp\tests\LoginNegativeTest.class
+com\alfabank\qapp\tests\LoginUITest.class
+com\alfabank\qapp\base\BaseTest.class
+com\alfabank\qapp\tests\LoginPositiveTest.class
+com\alfabank\qapp\base\AppiumDriverManager.class
+com\alfabank\qapp\utils\RegexHelper.class
+com\alfabank\qapp\pages\MainPage.class
