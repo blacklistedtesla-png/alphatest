@@ -15,19 +15,19 @@
 emulator -list-avds
 ```
 
-Запуск (подставить имя из списка выше):
+Запуск с отображением на экране:
 ```bash
-emulator -avd <ИМЯ_ИЗ_СПИСКА>
+emulator -avd <имя_эмулятора>
 ```
 
 Запуск без окна (для CI/автоматизации):
 ```bash
-emulator -avd <ИМЯ_ИЗ_СПИСКА> -no-window -no-audio
+emulator -avd <имя_эмулятора> -no-window -no-audio
 ```
 
 Дождаться загрузки:
 ```bash
-adb wait-for-device
+adb -s emulator-5554 wait-for-device
 ```
 
 ## Запуск на реальном устройстве
@@ -35,10 +35,7 @@ adb wait-for-device
 1. Включить режим разработчика и отладку по USB на устройстве.
 2. Подключить устройство по USB, подтвердить разрешение на отладку.
 3. Проверить подключение: `adb devices` — устройство должно быть `device`.
-4. Если подключено несколько устройств, указать нужное через параметр:
-   ```bash
-   mvn test -f tests/pom.xml -Dudid=СЕРИЙНЫЙ_НОМЕР
-   ```
+4. Изменить `udid` в `AppiumDriverManager.java` на серийный номер устройства.
 
 ## Запуск Appium Server
 
@@ -80,7 +77,7 @@ mvn test -f tests/pom.xml -Dtest=LoginPositiveTest#testSuccessfulLogin
 tests/src/test/java/com/alfabank/qapp/
 ├── base/
 │   ├── BaseTest.java              — setup/teardown Appium драйвера
-│   └── AppiumDriverManager.java   — управление драйвером, capabilites
+│   └── AppiumDriverManager.java   — управление драйвером, capabilities
 ├── pages/
 │   ├── LoginPage.java             — Page Object экрана авторизации
 │   └── MainPage.java              — Page Object главного экрана

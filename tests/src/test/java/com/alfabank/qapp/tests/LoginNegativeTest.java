@@ -25,6 +25,7 @@ public class LoginNegativeTest extends BaseTest {
     private static final String WRONG_USERNAME = "WrongUser";
     private static final String WRONG_PASSWORD = "WrongPass";
     private static final String EXPECTED_ERROR = "Введены неверные данные";
+    private static final int ERROR_WAIT_TIMEOUT = 10;
 
     @BeforeMethod
     @Override
@@ -40,7 +41,7 @@ public class LoginNegativeTest extends BaseTest {
     public void testLoginWithWrongPassword() {
         loginPage.login(VALID_USERNAME, WRONG_PASSWORD);
 
-        String errorText = loginPage.getErrorText();
+        String errorText = loginPage.waitForErrorText(ERROR_WAIT_TIMEOUT);
         Assert.assertFalse(errorText.isEmpty(),
                 "Error message should be displayed for wrong password");
         Assert.assertTrue(RegexHelper.isInvalidCredentialsError(errorText),
@@ -53,7 +54,7 @@ public class LoginNegativeTest extends BaseTest {
     public void testLoginWithWrongUsername() {
         loginPage.login(WRONG_USERNAME, VALID_PASSWORD);
 
-        String errorText = loginPage.getErrorText();
+        String errorText = loginPage.waitForErrorText(ERROR_WAIT_TIMEOUT);
         Assert.assertFalse(errorText.isEmpty(),
                 "Error message should be displayed for wrong username");
         Assert.assertEquals(errorText, EXPECTED_ERROR,
@@ -66,7 +67,7 @@ public class LoginNegativeTest extends BaseTest {
     public void testLoginWithBothWrongCredentials() {
         loginPage.login(WRONG_USERNAME, WRONG_PASSWORD);
 
-        String errorText = loginPage.getErrorText();
+        String errorText = loginPage.waitForErrorText(ERROR_WAIT_TIMEOUT);
         Assert.assertFalse(errorText.isEmpty(),
                 "Error message should be displayed for completely wrong credentials");
 
@@ -86,7 +87,7 @@ public class LoginNegativeTest extends BaseTest {
 
         loginPage.login(specialLogin, specialPassword);
 
-        String errorText = loginPage.getErrorText();
+        String errorText = loginPage.waitForErrorText(ERROR_WAIT_TIMEOUT);
         Assert.assertFalse(errorText.isEmpty(),
                 "Error message should be displayed for special character credentials");
     }

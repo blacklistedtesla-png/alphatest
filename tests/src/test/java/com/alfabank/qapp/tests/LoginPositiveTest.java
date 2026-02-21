@@ -37,7 +37,7 @@ public class LoginPositiveTest extends BaseTest {
     public void testSuccessfulLogin() {
         loginPage.login(VALID_USERNAME, VALID_PASSWORD);
 
-        Assert.assertTrue(mainPage.isSuccessScreenDisplayed(),
+        Assert.assertTrue(mainPage.isSuccessScreenDisplayed(15),
                 "Main screen should be displayed after successful login");
 
         String successText = mainPage.getSuccessText();
@@ -51,7 +51,7 @@ public class LoginPositiveTest extends BaseTest {
     public void testSuccessfulLoginViaXPath() {
         loginPage.loginViaXPath(VALID_USERNAME, VALID_PASSWORD);
 
-        Assert.assertTrue(mainPage.isSuccessScreenDisplayed(),
+        Assert.assertTrue(mainPage.isSuccessScreenDisplayed(15),
                 "Main screen should be displayed after successful login via XPath");
     }
 

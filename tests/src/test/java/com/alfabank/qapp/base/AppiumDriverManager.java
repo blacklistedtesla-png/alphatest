@@ -22,6 +22,7 @@ public class AppiumDriverManager {
 
     public AndroidDriver createDriver() {
         UiAutomator2Options options = new UiAutomator2Options()
+                .setUdid("emulator-5554")
                 .setDeviceName("emulator-5554")
                 .setPlatformName("Android")
                 .setAutomationName("UiAutomator2")

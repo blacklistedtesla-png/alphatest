@@ -21,6 +21,7 @@ public class LoginFieldValidationTest extends BaseTest {
     private MainPage mainPage;
 
     private static final int MAX_FIELD_LENGTH = 50;
+    private static final int ERROR_WAIT_TIMEOUT = 10;
 
     @BeforeMethod
     @Override
@@ -36,19 +37,17 @@ public class LoginFieldValidationTest extends BaseTest {
     public void testLoginWithEmptyFields() {
         loginPage.clickLoginButton();
 
-        Assert.assertFalse(mainPage.isSuccessScreenDisplayed(),
-                "Main screen should NOT be displayed when fields are empty");
+        // Wait for the async login to process
+        String errorText = loginPage.waitForErrorText(ERROR_WAIT_TIMEOUT);
 
-        String errorText = loginPage.getErrorText();
-        Assert.assertFalse(errorText.isEmpty(),
-                "Error message should be shown for empty fields");
+        Assert.assertFalse(mainPage.isSuccessScreenDisplayed(3),
+                "Main screen should NOT be displayed when fields are empty");
     }
 
     @Test
     @Severity(SeverityLevel.CRITICAL)
     @Description("Test login with username exceeding maximum length (50 characters)")
     public void testLoginWithMaxLengthUsername() {
-        // Generate a string of 51 characters — exceeding the 50-char limit
         String longUsername = "A".repeat(MAX_FIELD_LENGTH + 1);
 
         Assert.assertFalse(RegexHelper.isWithinMaxLength(longUsername, MAX_FIELD_LENGTH),
@@ -56,7 +55,10 @@ public class LoginFieldValidationTest extends BaseTest {
 
         loginPage.login(longUsername, "Password");
 
-        Assert.assertFalse(mainPage.isSuccessScreenDisplayed(),
+        // Wait for the async validation
+        String errorText = loginPage.waitForErrorText(ERROR_WAIT_TIMEOUT);
+
+        Assert.assertFalse(mainPage.isSuccessScreenDisplayed(3),
                 "Main screen should NOT be displayed when username exceeds max length");
     }
 
@@ -71,7 +73,9 @@ public class LoginFieldValidationTest extends BaseTest {
 
         loginPage.login("Login", longPassword);
 
-        Assert.assertFalse(mainPage.isSuccessScreenDisplayed(),
+        String errorText = loginPage.waitForErrorText(ERROR_WAIT_TIMEOUT);
+
+        Assert.assertFalse(mainPage.isSuccessScreenDisplayed(3),
                 "Main screen should NOT be displayed when password exceeds max length");
     }
 
@@ -82,7 +86,9 @@ public class LoginFieldValidationTest extends BaseTest {
         loginPage.enterPassword("Password");
         loginPage.clickLoginButton();
 
-        Assert.assertFalse(mainPage.isSuccessScreenDisplayed(),
+        String errorText = loginPage.waitForErrorText(ERROR_WAIT_TIMEOUT);
+
+        Assert.assertFalse(mainPage.isSuccessScreenDisplayed(3),
                 "Main screen should NOT be displayed when username is empty");
     }
 
@@ -93,7 +99,9 @@ public class LoginFieldValidationTest extends BaseTest {
         loginPage.enterUsername("Login");
         loginPage.clickLoginButton();
 
-        Assert.assertFalse(mainPage.isSuccessScreenDisplayed(),
+        String errorText = loginPage.waitForErrorText(ERROR_WAIT_TIMEOUT);
+
+        Assert.assertFalse(mainPage.isSuccessScreenDisplayed(3),
                 "Main screen should NOT be displayed when password is empty");
     }
 
@@ -108,9 +116,10 @@ public class LoginFieldValidationTest extends BaseTest {
 
         loginPage.login(exactMaxUsername, "Password");
 
-        // Should not succeed (wrong credentials), but should not fail on validation
-        String errorText = loginPage.getErrorText();
-        Assert.assertFalse(mainPage.isSuccessScreenDisplayed(),
+        // Wait for the async login
+        String errorText = loginPage.waitForErrorText(ERROR_WAIT_TIMEOUT);
+
+        Assert.assertFalse(mainPage.isSuccessScreenDisplayed(3),
                 "Login with 50-char username should be processed (not rejected by length validation)");
     }
 }
