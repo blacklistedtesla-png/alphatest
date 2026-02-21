@@ -15,19 +15,19 @@
 emulator -list-avds
 ```
 
-Запуск с отображением на экране:
+Запуск (подставить имя из списка выше):
 ```bash
-emulator -avd <имя_эмулятора>
+emulator -avd <ИМЯ_ИЗ_СПИСКА>
 ```
 
 Запуск без окна (для CI/автоматизации):
 ```bash
-emulator -avd <имя_эмулятора> -no-window -no-audio
+emulator -avd <ИМЯ_ИЗ_СПИСКА> -no-window -no-audio
 ```
 
 Дождаться загрузки:
 ```bash
-adb -s emulator-5554 wait-for-device
+adb wait-for-device
 ```
 
 ## Запуск на реальном устройстве
@@ -35,7 +35,10 @@ adb -s emulator-5554 wait-for-device
 1. Включить режим разработчика и отладку по USB на устройстве.
 2. Подключить устройство по USB, подтвердить разрешение на отладку.
 3. Проверить подключение: `adb devices` — устройство должно быть `device`.
-4. Изменить `udid` в `AppiumDriverManager.java` на серийный номер устройства.
+4. Если подключено несколько устройств, указать нужное через параметр:
+   ```bash
+   mvn test -f tests/pom.xml -Dudid=СЕРИЙНЫЙ_НОМЕР
+   ```
 
 ## Запуск Appium Server
 
