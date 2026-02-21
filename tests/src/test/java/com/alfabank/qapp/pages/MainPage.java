@@ -5,8 +5,6 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
@@ -17,9 +15,9 @@ public class MainPage {
 
     private final AndroidDriver driver;
 
-    // XPath locator for the success message ("Вход в Alfa-Test выполнен")
+    // XPath locator for the success message
     private static final By SUCCESS_TEXT_XPATH = By.xpath(
-            "//android.widget.TextView[contains(@text, 'выполнен')]");
+            "//android.widget.TextView[contains(@text, 'Alfa-Test')]");
 
     public MainPage(AndroidDriver driver) {
         this.driver = driver;
@@ -35,27 +33,13 @@ public class MainPage {
     }
 
     /**
-     * Checks if the success screen is displayed within a given timeout.
+     * Checks if the success screen is displayed.
      */
     public boolean isSuccessScreenDisplayed() {
-        return isSuccessScreenDisplayed(5);
-    }
-
-    /**
-     * Checks if the success screen is displayed within a given timeout (seconds).
-     * Uses explicit wait to avoid blocking on implicit wait for negative tests.
-     */
-    public boolean isSuccessScreenDisplayed(int timeoutSeconds) {
         try {
-            // Temporarily reduce implicit wait so explicit wait controls timing
-            driver.manage().timeouts().implicitlyWait(Duration.ofMillis(500));
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
-            wait.until(ExpectedConditions.presenceOfElementLocated(SUCCESS_TEXT_XPATH));
-            return true;
+            return driver.findElement(SUCCESS_TEXT_XPATH).isDisplayed();
         } catch (Exception e) {
             return false;
-        } finally {
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         }
     }
 }

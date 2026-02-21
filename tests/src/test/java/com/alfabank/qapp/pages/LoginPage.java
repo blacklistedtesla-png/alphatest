@@ -6,8 +6,6 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
@@ -91,22 +89,6 @@ public class LoginPage {
 
     public String getErrorText() {
         return errorText.getText();
-    }
-
-    /**
-     * Waits for error text to become non-empty (async operation in the app).
-     */
-    public String waitForErrorText(int timeoutSeconds) {
-        try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
-            wait.until(d -> {
-                String text = errorText.getText();
-                return text != null && !text.isEmpty();
-            });
-            return errorText.getText();
-        } catch (Exception e) {
-            return errorText.getText();
-        }
     }
 
     public boolean isLoginButtonDisplayed() {
