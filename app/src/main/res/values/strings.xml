@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Alfa-Test</string>
+
+    <string name="login_screen_title">Вход в Alfa-Test</string>
+    <string name="username">Логин</string>
+    <string name="password">Пароль</string>
+    <string name="action_enter">Вход</string>
+    <string name="login_result_title">Вход в Alfa-Test выполнен</string>
+    <string name="incorrect_credentials">Введены неверные данные</string>
+</resources>

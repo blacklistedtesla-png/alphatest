@@ -1,0 +1,5 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="login_screen_padding">16dp</dimen>
+    <dimen name="login_controls_top_margin">8dp</dimen>
+</resources>

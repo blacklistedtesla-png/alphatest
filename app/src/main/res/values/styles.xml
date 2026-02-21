@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ScreenTitle" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">@dimen/screen_title_size</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <dimen name="screen_title_size">32sp</dimen>
+    <color name="text_color">#000000</color>
+</resources>
