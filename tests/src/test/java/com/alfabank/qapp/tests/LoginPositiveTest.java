@@ -10,10 +10,19 @@ import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 /**
  * Positive login test scenarios.
  * Validates successful authentication with correct credentials.
+ *
+ * Assertion strategy:
+ * - Soft assertions (SoftAssert) are used where a method contains multiple independent
+ *   checks. All checks execute even if earlier ones fail, giving a complete picture
+ *   of test results in a single run. Failures are reported together via assertAll().
+ * - Hard assertions (Assert) are kept where checks have sequential dependencies
+ *   (e.g., getSuccessText() would throw if the screen isn't displayed) or where
+ *   there is only a single assertion (soft provides no benefit).
  */
 public class LoginPositiveTest extends BaseTest {
 
@@ -59,9 +68,11 @@ public class LoginPositiveTest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     @Description("Verify valid login format using regex")
     public void testValidLoginFormatWithRegex() {
-        Assert.assertTrue(RegexHelper.isValidLoginFormat(VALID_USERNAME),
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertTrue(RegexHelper.isValidLoginFormat(VALID_USERNAME),
                 "Valid username 'Login' should match the login format regex");
-        Assert.assertTrue(RegexHelper.isWithinMaxLength(VALID_USERNAME, 50),
+        softAssert.assertTrue(RegexHelper.isWithinMaxLength(VALID_USERNAME, 50),
                 "Valid username should be within max length of 50 characters");
+        softAssert.assertAll();
     }
 }

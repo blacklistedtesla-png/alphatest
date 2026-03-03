@@ -8,10 +8,17 @@ import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 /**
  * UI element verification tests for the login screen.
  * Checks presence, visibility, and state of UI components.
+ *
+ * Assertion strategy:
+ * - testLoginScreenElementsPresence uses SoftAssert because all 4 element visibility
+ *   checks are independent — if the title is missing, we still want to know whether
+ *   the input fields and button are visible.
+ * - Other methods use hard Assert (single assertion or sequential dependency).
  */
 public class LoginUITest extends BaseTest {
 
@@ -28,14 +35,16 @@ public class LoginUITest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     @Description("Verify all login screen UI elements are visible")
     public void testLoginScreenElementsPresence() {
-        Assert.assertTrue(loginPage.isTitleDisplayed(),
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertTrue(loginPage.isTitleDisplayed(),
                 "Title 'Вход в Alfa-Test' should be visible");
-        Assert.assertTrue(loginPage.isUsernameFieldDisplayed(),
+        softAssert.assertTrue(loginPage.isUsernameFieldDisplayed(),
                 "Username input field should be visible");
-        Assert.assertTrue(loginPage.isPasswordFieldDisplayed(),
+        softAssert.assertTrue(loginPage.isPasswordFieldDisplayed(),
                 "Password input field should be visible");
-        Assert.assertTrue(loginPage.isLoginButtonDisplayed(),
+        softAssert.assertTrue(loginPage.isLoginButtonDisplayed(),
                 "Login button should be visible");
+        softAssert.assertAll();
     }
 
     @Test

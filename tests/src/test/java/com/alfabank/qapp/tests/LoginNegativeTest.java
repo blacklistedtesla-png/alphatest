@@ -7,13 +7,18 @@ import com.alfabank.qapp.utils.RegexHelper;
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 /**
  * Negative login test scenarios.
  * Validates error handling for invalid credentials.
+ *
+ * Assertion strategy:
+ * - All methods use soft assertions because each contains two independent checks
+ *   (e.g., "error is shown" + "error matches pattern"). Both checks should execute
+ *   regardless of which one fails, so we get the full diagnostic picture.
  */
 public class LoginNegativeTest extends BaseTest {
 
@@ -41,11 +46,13 @@ public class LoginNegativeTest extends BaseTest {
     public void testLoginWithWrongPassword() {
         loginPage.login(VALID_USERNAME, WRONG_PASSWORD);
 
+        SoftAssert softAssert = new SoftAssert();
         String errorText = loginPage.waitForErrorText(ERROR_WAIT_TIMEOUT);
-        Assert.assertFalse(errorText.isEmpty(),
+        softAssert.assertFalse(errorText.isEmpty(),
                 "Error message should be displayed for wrong password");
-        Assert.assertTrue(RegexHelper.isInvalidCredentialsError(errorText),
+        softAssert.assertTrue(RegexHelper.isInvalidCredentialsError(errorText),
                 "Error message should match expected pattern: " + errorText);
+        softAssert.assertAll();
     }
 
     @Test
@@ -54,11 +61,13 @@ public class LoginNegativeTest extends BaseTest {
     public void testLoginWithWrongUsername() {
         loginPage.login(WRONG_USERNAME, VALID_PASSWORD);
 
+        SoftAssert softAssert = new SoftAssert();
         String errorText = loginPage.waitForErrorText(ERROR_WAIT_TIMEOUT);
-        Assert.assertFalse(errorText.isEmpty(),
+        softAssert.assertFalse(errorText.isEmpty(),
                 "Error message should be displayed for wrong username");
-        Assert.assertEquals(errorText, EXPECTED_ERROR,
+        softAssert.assertEquals(errorText, EXPECTED_ERROR,
                 "Error text should be: " + EXPECTED_ERROR);
+        softAssert.assertAll();
     }
 
     @Test
@@ -67,12 +76,13 @@ public class LoginNegativeTest extends BaseTest {
     public void testLoginWithBothWrongCredentials() {
         loginPage.login(WRONG_USERNAME, WRONG_PASSWORD);
 
+        SoftAssert softAssert = new SoftAssert();
         String errorText = loginPage.waitForErrorText(ERROR_WAIT_TIMEOUT);
-        Assert.assertFalse(errorText.isEmpty(),
+        softAssert.assertFalse(errorText.isEmpty(),
                 "Error message should be displayed for completely wrong credentials");
-
-        Assert.assertFalse(mainPage.isSuccessScreenDisplayed(),
+        softAssert.assertFalse(mainPage.isSuccessScreenDisplayed(),
                 "Main screen should NOT be displayed after failed login");
+        softAssert.assertAll();
     }
 
     @Test
@@ -82,14 +92,16 @@ public class LoginNegativeTest extends BaseTest {
         String specialLogin = "user@#$%";
         String specialPassword = "p@ss!word&";
 
-        Assert.assertTrue(RegexHelper.containsSpecialCharacters(specialLogin),
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertTrue(RegexHelper.containsSpecialCharacters(specialLogin),
                 "Test input should contain special characters");
 
         loginPage.login(specialLogin, specialPassword);
 
         String errorText = loginPage.waitForErrorText(ERROR_WAIT_TIMEOUT);
-        Assert.assertFalse(errorText.isEmpty(),
+        softAssert.assertFalse(errorText.isEmpty(),
                 "Error message should be displayed for special character credentials");
+        softAssert.assertAll();
     }
 
     @Test
@@ -98,12 +110,14 @@ public class LoginNegativeTest extends BaseTest {
     public void testLoginWithWhitespaceOnly() {
         String whitespaceInput = "   ";
 
-        Assert.assertTrue(RegexHelper.isWhitespaceOnly(whitespaceInput),
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertTrue(RegexHelper.isWhitespaceOnly(whitespaceInput),
                 "Test input should be whitespace only (regex validation)");
 
         loginPage.login(whitespaceInput, whitespaceInput);
 
-        Assert.assertFalse(mainPage.isSuccessScreenDisplayed(),
+        softAssert.assertFalse(mainPage.isSuccessScreenDisplayed(),
                 "Main screen should NOT be displayed for whitespace-only input");
+        softAssert.assertAll();
     }
 }
