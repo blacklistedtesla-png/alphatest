@@ -1,6 +1,6 @@
 package com.alfabank.qapp.base;
 
-import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.AppiumDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
@@ -10,7 +10,7 @@ import org.testng.annotations.BeforeMethod;
  */
 public abstract class BaseTest {
 
-    protected AndroidDriver driver;
+    protected AppiumDriver driver;
     private final AppiumDriverManager driverManager = new AppiumDriverManager();
 
     @BeforeMethod
